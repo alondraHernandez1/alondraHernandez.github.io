@@ -16,39 +16,43 @@
  * 11 minutos después de hacer los
  * cambios en tu sitio, para
  * depués actualizar este archivo.
- 
+ */
+const CACHE = "dmppwa-2.03";
 
 /** Archivos requeridos para que
  * la aplicación funcione fuera de
  * línea.
  */
-//asignar un nombre y versión al cache
-const CACHE_NAME = 'v1_pwa_app_cache',
-  urlsToCache = [
-    './',
-    'css/estilos.css',
-    'disp/CtrlDispositivo.js',
-    'disp/ProxyEntrada.js',
-    'disp/ProxyHistorial.js',
-    'disp/ProxySalida.js',
-    'disp/ReseInt.js',
-    'disp/utilIoT.js',
-    'img/icono256.png',
-    'img/icono1024.png',
-    'img/icono2048.png',
-    'js/CtrlHistorial.js',
-    'js/CtrlMovil.js',
-    'js/init.js',
-    'js/script.js',
-    'js/tipos.js',
-    'lib/fabrica.js',
-    'lib/tiposFire.js',
-    'lib/util.js',
-    'dispositivo.html',
-    'favicon.ico',
-    'historial.html',
-    'index.html'
-  ]
+const ARCHIVOS = [
+    "css/estilos.css",
+    "disp/CtrlDispositivo.js",
+    "disp/ProxyEntrada.js",
+    "disp/ProxyHistorial.js",
+    "disp/ProxySalida.js",
+    "disp/ReseInt.js",
+    "disp/utilIoT.js",
+    "img/icono256.png",
+    "img/icono1024.png",
+    "img/icono2048.png",
+    "js/CtrlHistorial.js",
+    "js/CtrlMovil.js",
+    "js/init.js",
+    "js/script.js",
+    "js/tipos.js",
+    "lib/fabrica.js",
+    "lib/tiposFire.js",
+    "lib/util.js",
+    "dispositivo.html",
+    "favicon.ico",
+    "historial.html",
+    "index.html",
+    "lib/roboto-v20-latin-700.woff",
+    "lib/roboto-v20-latin-700.woff2",
+    "lib/roboto-v20-latin-regular.woff",
+    "lib/roboto-v20-latin-regular.woff2",
+    "lib/roboto.css"
+  "/"
+];
 
 //durante la fase de instalación, generalmente se almacena en caché los activos estáticos
 self.addEventListener('install', e => {
@@ -97,4 +101,30 @@ self.addEventListener('fetch', e => {
         return fetch(e.request)
       }).catch(err => console.log('Falló algo al solicitar recursos', err))
   )
-})
+
+self.addEventListener("install",
+  evt => {
+    console.log("sw instalado.");
+    /* Realiza la instalación.
+     * Carga los archivos
+     * requeridos en la caché. */
+    // @ts-ignore
+    evt.waitUntil(cargaCache());
+  });
+
+/* Toma los archivos solicitados
+ * de la caché; si no los
+ * encuentra, se descargan. */
+self.addEventListener("fetch",
+  evt => {
+    // @ts-ignore
+    if (evt.request.method ===
+      "GET") {
+      // @ts-ignore
+      evt.respondWith(
+        usaCache(evt));
+    }
+  });
+
+
+}
