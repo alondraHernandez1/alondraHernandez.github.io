@@ -17,13 +17,13 @@
  * cambios en tu sitio, para
  * depués actualizar este archivo.
  */
-const CACHE = "dmppwa-2.03";
+const CACHE_NAME = 'v1_pwa_app_cache';
 
 /** Archivos requeridos para que
  * la aplicación funcione fuera de
  * línea.
  */
-const ARCHIVOS = [
+urlsToCache = [
     "css/estilos.css",
     "disp/CtrlDispositivo.js",
     "disp/ProxyEntrada.js",
